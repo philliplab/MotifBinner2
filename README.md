@@ -24,9 +24,9 @@ can be aligned without difficulty. The alignments are used to generate
 consensus sequences using a majority rule. The consensus sequences together
 with a report on the binning of the dataset is reported.
 
-## Installation Instructions for Ubuntu 14.04
+## Installation Instructions for Ubuntu 14.04 / 20.04
 
-Make sure you have a recent version of R:
+Make sure you have a recent version of R: (Not required for Ubuntu 20.04)
 http://stackoverflow.com/questions/10476713/how-to-upgrade-r-in-ubuntu. Follow
 these instructions to set up the correct repositiory for apt.
 
@@ -40,30 +40,37 @@ Next, install devtools' depedancies and muscle using apt-get:
 sudo apt-get install libssl-dev libxml2-dev libcurl4-gnutls-dev muscle
 ```
 
-A very recent (at the time this README was written) version of pandoc is required:
+MotifBinner2 requires pandoc version > 1.15. `apt` will work for Ubuntu 20.04, but you might have to manually download an appropriate version for older versions.
+
+Using `apt` for pandoc:
+```{sh}
+sudo apt install pandoc
+pandoc -v
+```
+
+Manually installing pandoc:
+
 Download a binary package from
 https://github.com/jgm/pandoc/releases/1.15 and then install it with dpkg:
+(Download the latest available release and update version numbers as needed)
 ```{sh}
 wget https://github.com/jgm/pandoc/releases/download/1.15/pandoc-1.15-1-amd64.deb
 sudo dpkg -i pandoc-1.15-1-amd64.deb
 ```
 
 Next install all the dependencies from Bioconductor. This is done from within
-an R session:
-```{r}
-sudo R
-source("http://bioconductor.org/biocLite.R")
-biocLite("Biostrings")
-biocLite("ShortRead")
-```
-
-Then, from within R, install devtools:
+a **root user R session** and requires devtools: 
 ```{r}
 install.packages('devtools', repo = 'http://cran.rstudio.com/')
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biostrings")
+BiocManager::install("ShortRead")
 ```
 
 At last install MotifBinner:
-From a local file:
+From a local file: (**Still as root**)
 
 ```{r}
 library(devtools)
@@ -74,15 +81,14 @@ Please note that you must use install_local from devtools - install.packages
 will not work. Change /path/to/file to the path to the installation file on
 your computer and x.y.z to match the installation file you have.
 
-Or using the bit_bucket repo:
+Or using the github repo:
 ```{r}
 library(devtools)
-install_bitbucket('hivdiversity/MotifBinner2', 
-  auth_user = 'username', password = 'password')
+install_github('philliplab/MotifBinner2')
 ```
 
 Lastly, MotifBinner includes a script that can be run from the commandline. You
-need to put this script somewhere convenient ('/usr/bin' for example)
+need to put this script somewhere convenient ('/usr/bin' for example) (**Must be done from a root R session**)
 ```{r}
 file.symlink(from = file.path(find.package('MotifBinner2'), 'MotifBinner2.R'),
              to = '/usr/bin')
@@ -90,16 +96,7 @@ file.symlink(from = file.path(find.package('MotifBinner2'), 'MotifBinner2.R'),
 
 ## Usage
 
-### Within R
-
-```{r}
-library(MotifBinner2)
-help('process_file')
-```
-
-This will display the help for the main function in MotifBinner.
-
-### From the command line
+From the command line
 
 ```{sh}
 MotifBinner2 -h

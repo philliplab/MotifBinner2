@@ -4,9 +4,13 @@
 \alias{apply_consensus_cutoff}
 \title{Applies the consensus cutoff to an existing consensuses file}
 \usage{
-apply_consensus_cutoff(pid_seq_name_file, consensuses_file,
-  sequencing_error_rate = 1/50, motif_length = 8,
-  consensus_cutoff = "model")
+apply_consensus_cutoff(
+  pid_seq_name_file,
+  consensuses_file,
+  sequencing_error_rate = 1/50,
+  motif_length = 8,
+  consensus_cutoff = "model"
+)
 }
 \arguments{
 \item{pid_seq_name_file}{The name of the file that contains the list of

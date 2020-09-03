@@ -4,9 +4,18 @@
 \alias{sim_wrapper}
 \title{Wrapper that performs simulation and process the results}
 \usage{
-sim_wrapper(output_dir, file_name, size_start = 100, size_stop = 10000,
-  size_step = 100, pl = 9, phi = (1/50), repeats = 1000,
-  verbose = FALSE, ncpu = 8)
+sim_wrapper(
+  output_dir,
+  file_name,
+  size_start = 100,
+  size_stop = 10000,
+  size_step = 100,
+  pl = 9,
+  phi = (1/50),
+  repeats = 1000,
+  verbose = FALSE,
+  ncpu = 8
+)
 }
 \arguments{
 \item{output_dir}{The output directory where the simulation result must be
