@@ -63,12 +63,12 @@ genReport_internal_allResults <- function(all_results, config)
   setwd(file.path(config$output_dir, config$base_for_names, 'full_report'))
 
   html_header_extra <- c(
-paste('<script src="', rmarkdown_templates_folder, '/jquery-1.11.3/jquery.min.js"></script>', sep = ''),
+paste('<script src="', rmarkdown_templates_folder, '/jquery/jquery.min.js"></script>', sep = ''),
 paste('<meta name="viewport" content="width=device-width, initial-scale=1" />', sep = ''),
-paste('<link href="', rmarkdown_templates_folder,  '/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />', sep = ''),
-paste('<script src="', rmarkdown_templates_folder, '/bootstrap-3.3.5/js/bootstrap.min.js"></script>', sep = ''),
-paste('<script src="', rmarkdown_templates_folder, '/bootstrap-3.3.5/shim/html5shiv.min.js"></script>', sep = ''),
-paste('<script src="', rmarkdown_templates_folder, '/bootstrap-3.3.5/shim/respond.min.js"></script>', sep = '')
+paste('<link href="', rmarkdown_templates_folder,  '/bootstrap/css/bootstrap.min.css" rel="stylesheet" />', sep = ''),
+paste('<script src="', rmarkdown_templates_folder, '/bootstrap/js/bootstrap.min.js"></script>', sep = ''),
+paste('<script src="', rmarkdown_templates_folder, '/bootstrap/shim/html5shiv.min.js"></script>', sep = ''),
+paste('<script src="', rmarkdown_templates_folder, '/bootstrap/shim/respond.min.js"></script>', sep = '')
 )
   writeLines(html_header_extra, 'header_extra_stuff.html')
 
@@ -76,10 +76,10 @@ paste('<script src="', rmarkdown_templates_folder, '/bootstrap-3.3.5/shim/respon
     "/usr/bin/pandoc +RTS -K512m -RTS ",
     paste(all_report_files, collapse = ' '), " ",
     "--to html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' ",
-    "--from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash ",
+    "--from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart ",
     "--output ", paste(config$base_for_names, '_full_report.html', sep = ''), " ",
 #    "--output ", file.path(config$output_dir, config$base_for_names, paste(config$base_for_names, '_full_report.html', sep = '')),
-    "--smart --email-obfuscation none --self-contained --standalone --section-divs ",
+    "--email-obfuscation none --self-contained --standalone --section-divs ",
     "--toc ",
     "--variable 'theme:bootstrap' ",
     "--include-in-header header_extra_stuff.html ", 
