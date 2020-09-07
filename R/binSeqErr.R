@@ -99,7 +99,7 @@ group_cons_bins_internal <- function(cons_dat, msa_dat)
   cons_pids <- gsub('^.*_', '', cons_pids) # strip off base for names prefix
   cons_dat <- cons_dat[order(cons_pids)]
   cons_pids <- sort(cons_pids)
-  msa_pids <- gsub('_[^ACGTacgt]*$', '', gsub('^.*PID:_', '', as.character(msa_dat@id)))
+  msa_pids <- gsub('_[^ACGTacgt]*$', '', gsub('^.*PID:(_)*', '', as.character(msa_dat@id)))
   msa_dat <- msa_dat[order(msa_pids)]
   msa_pids <- sort(msa_pids)
   stopifnot(all(msa_pids %in% cons_pids))
@@ -172,8 +172,14 @@ reformat_tallies <- function(tallies_list)
 #' @param msa_dat The reads with sequences of each bin aligned. The sequence
 #'   name must contain PID:_ followed by the PID somewhere in the name.
 
+
 binSeqErr_internal <- function(cons_dat, msa_dat)
 {
+  if (FALSE){
+    all_tallies_fwd <- binSeqErr_internal(msa_dat = msa_dat_fwd, cons_dat = cons_dat_fwd)
+    msa_dat <- msa_dat_fwd
+    cons_dat <- cons_dat_fwd
+  }
   dat_list <- group_cons_bins_internal(cons_dat = cons_dat, msa_dat = msa_dat)
 
   all_tallies <- NULL
